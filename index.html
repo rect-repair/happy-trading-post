@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>Happy Trading Post</title>
+  <link rel="icon" type="image/png" href="public/time.png" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap');
+
+    * { box-sizing: border-box; margin: 0; padding: 0; cursor: url('public/dream-cursor.png') 32 32, auto; }
+
+    body {
+      font-family: 'Fredoka', sans-serif;
+      background: #aaa;
+      font-size: 11px;
+      line-height: 1.3;
+    }
+
+    .page {
+      max-width: 430px;
+      margin: 0 auto;
+      background: #fff;
+      border: 2px solid #c00;
+      overflow: hidden;
+    }
+
+    /* ══ HEADER ══ */
+    .hdr {
+      background: #fff;
+      border-bottom: 2px solid #c00;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 6px 8px;
+    }
+    .hdr img {
+      max-width: 100%;
+      max-height: 80px;
+      display: block;
+      object-fit: contain;
+    }
+
+    /* ══ SECTION HEADER BARS ══ */
+    .sh {
+      display: flex;
+      align-items: center;
+      padding: 2px 5px;
+      font-size: 11px;
+      font-weight: 900;
+      font-family: 'Fredoka', sans-serif;
+      text-transform: uppercase;
+      color: #fff;
+      gap: 3px;
+      line-height: 1.4;
+    }
+    .sh .star  { color: #f1fa0b; font-size: 9px; }
+    .sh .right { margin-left: auto; font-size: 8px; font-weight: normal; opacity: .85; }
+
+    .sh-red, .sh-green, .sh-blue, .sh-gold, .sh-purple, .sh-dark {
+      background: #cc0000;
+      border-top: 1px solid rgb(0, 0, 0);
+      -webkit-text-stroke: 3px #000;
+      color: #f1fa0b;
+      paint-order: stroke fill;
+      filter: url(#charcoal);
+      /* text-shadow:
+        0 0 2px #f1fa0b,
+        0 0 3px rgba(241,250,11,0.75),
+        0 0 8px rgba(241,250,11,0.45),
+        0 0 14px rgba(241,250,11,0.2); */
+    }
+    .sh .star { color: #fff; text-shadow: none; -webkit-text-stroke: 0; }
+
+    /* ══ MARKET BOX ══ */
+    .market-wrap { margin: 3px 3px 0; border: 1px solid #c00; background: #fffef0; }
+    .market-body { display: flex; }
+
+    .market-left {
+      flex: 1;
+      padding: 5px 7px;
+      border-right: 1px solid #e0c0a0;
+    }
+    .m-lbl  { font-size: 8px; color: #888; text-transform: uppercase; letter-spacing: .5px; }
+    .m-time { font-size: 28px; font-weight: 900; color: #cc0000; line-height: 1; letter-spacing: -1px; }
+    .m-dash { font-size: 11px; font-weight: bold; color: #cc0000; }
+    .tz {
+      display: inline-block; background: #1a5c0a; color: #f1fa0b;
+      font-size: 8px; font-weight: bold; padding: 0 4px; margin-top: 3px; letter-spacing: 1px;
+    }
+
+    .market-right {
+      width: 130px;
+      padding: 5px 7px;
+      background: #fff8e0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .m-date  { font-size: 10px; font-weight: 900; color: #222; line-height: 1.4; }
+    .m-venue { font-size: 10px; font-weight: 900; color: #1a5c0a; margin-top: 2px; line-height: 1.4; }
+    .m-sub   { font-size: 9px; color: #555; font-style: italic; }
+
+    .market-warn {
+      background: #cc0000; color: #fff;
+      font-size: 9px; font-weight: bold;
+      text-align: center; padding: 2px 4px;
+    }
+
+    /* ══ CURRENCY GRID ══ */
+    .cgrid-wrap { margin: 3px 3px 0; border: 1px solid #aaa; }
+    .cgrid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+    }
+    .ctile {
+      border-right: 1px solid #ccc;
+      border-bottom: 1px solid #ccc;
+      text-align: center;
+      background: #fff;
+      overflow: hidden;
+    }
+    .ctile:nth-child(3n) { border-right: none; }
+    .ctile:nth-last-child(-n+3) { border-bottom: none; }
+
+    .ctile img {
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: cover;
+      display: block;
+    }
+    .ctile .cname {
+      font-size: 9px;
+      color: #333;
+      background: #f5f5f5;
+      padding: 1px 2px;
+      border-top: 1px solid #ddd;
+      line-height: 1.3;
+    }
+    .ctile .crate {
+      font-size: 14px;
+      font-weight: 900;
+      color: #cc0000;
+      background: #f5f5f5;
+      display: block;
+      padding: 1px 2px 3px;
+      letter-spacing: 1px;
+    }
+
+    /* ══ TWO COLUMN BODY ══ */
+    .two-col {
+      display: flex;
+      margin: 3px 3px 0;
+      border: 1px solid #bbb;
+    }
+    .tcol {
+      flex: 1;
+      padding: 5px 6px;
+    }
+    .tcol + .tcol {
+      border-left: 1px solid #ddd;
+      background: #f8f8ff;
+    }
+    .tcol-head {
+      font-size: 10px;
+      font-weight: 900;
+      color: #cc0000;
+      border-bottom: 1px solid #cc0000;
+      padding-bottom: 2px;
+      margin-bottom: 4px;
+      text-transform: uppercase;
+      letter-spacing: .3px;
+    }
+    .tcol-body {
+      font-size: 10px;
+      line-height: 1.6;
+      color: #333;
+    }
+    .tcol-body .r { color: #cc0000; font-weight: bold; }
+    .tcol-body .g { color: #196600; font-weight: bold; }
+    .tcol-body .b { color: #0044bb; font-weight: bold; }
+
+    /* ══ RULES LIST ══ */
+    .rlist { list-style: none; padding: 0; }
+    .rlist li {
+      display: flex;
+      gap: 4px;
+      align-items: flex-start;
+      font-size: 10px;
+      line-height: 1.45;
+      padding: 3px 0;
+      border-bottom: 1px dotted #ccc;
+      color: #333;
+    }
+    .rlist li:last-child { border-bottom: none; padding-bottom: 0; }
+    .rn {
+      background: #cc0000; color: #fff;
+      font-size: 8px; font-weight: 900;
+      min-width: 13px; height: 13px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; margin-top: 1px;
+    }
+
+    /* ══ FOOTER ══ */
+    .ft { background: #1a5c0a; padding: 5px 6px 0; }
+    .ft-row { display: flex; gap: 6px; align-items: flex-start; padding-bottom: 5px; }
+    .ft-contact {
+      flex: 1;
+      font-size: 10px;
+      color: #b8e898;
+      line-height: 1.8;
+    }
+    .ft-contact a { color: #f1fa0b; text-decoration: none; font-weight: bold; }
+
+    .ft-urlbox {
+      border: 1.5px solid #f1fa0b;
+      padding: 4px 6px;
+      text-align: center;
+      min-width: 110px;
+    }
+    .ft-urlbox .ul { font-size: 7px; color: #90c870; text-transform: uppercase; letter-spacing: 1px; }
+    .ft-urlbox .uv { font-size: 9px; font-weight: 900; color: #f1fa0b; word-break: break-all; line-height: 1.4; }
+
+    .bot-bar {
+      background: #cc0000; color: #ffaaaa;
+      font-size: 8px; text-align: center;
+      padding: 2px 4px; letter-spacing: .5px;
+    }
+
+    /* ══ EXTRA: top index strip (like reference top list) ══ */
+    .index-strip {
+      background: #fff8e0;
+      border-bottom: 1px solid #e0c090;
+      padding: 3px 6px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px 8px;
+    }
+    .ix-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      border-bottom: 1px dotted #ddd;
+      padding: 1px 0;
+      font-size: 9px;
+      color: #333;
+    }
+    .ix-row .ix-name { flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .ix-row .ix-code { color: #cc0000; font-weight: 900; font-size: 10px; margin-left: 4px; flex-shrink: 0; }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="hdr">
+    <img src="public/title.png" alt="Happy Trading Post" />
+  </div>
+
+
+  <!-- MARKET CLOSING -->
+  <div class="sh sh-red">
+    <span class="star">★</span> MARKET CLOSING TIME &amp; LOCATION
+  </div>
+
+  <div class="market-wrap">
+    <div class="market-body">
+      <div class="market-left">
+        <div class="m-lbl">closes at</div>
+        <div class="m-time">14:30</div>
+        <div><span class="tz">CEST</span></div>
+      </div>
+      <div class="market-right">
+        <div class="m-date">Friday<br/>May 15, 2026</div>
+        <div class="m-venue">Betonhalle Stage</div>
+        <div class="m-venue">Silent Green</div>
+      </div>
+    </div>
+    <div class="market-warn">★💸₊˚⊹♡★˚₊‧꒰ა $ ໒꒱ ‧₊˚★💸₊˚⊹♡★˚₊‧꒰ა $ ໒꒱ ‧₊˚</div>
+  </div>
+
+  <!-- CURRENCY TOKENS -->
+  <div class="sh sh-green" style="margin-top:3px;">
+    <span class="star">★</span> CURRENCY TOKENS
+  </div>
+
+  <div class="cgrid-wrap">
+    <div class="cgrid">
+      <div class="ctile">
+        <img src="public/bonds.png" alt="Bonds" />
+        <div class="cname">Bonds</div>
+        <span class="crate">???</span>
+      </div>
+      <div class="ctile">
+        <img src="public/computer.png" alt="Computer" />
+        <div class="cname">Computer</div>
+        <span class="crate">???</span>
+      </div>
+      <div class="ctile">
+        <img src="public/dream.png" alt="Dream" />
+        <div class="cname">Dream</div>
+        <span class="crate">???</span>
+      </div>
+      <div class="ctile">
+        <img src="public/fame.png" alt="Fame" />
+        <div class="cname">Fame</div>
+        <span class="crate">???</span>
+      </div>
+      <div class="ctile">
+        <img src="public/health.png" alt="Health" />
+        <div class="cname">Health</div>
+        <span class="crate">???</span>
+      </div>
+      <div class="ctile">
+        <img src="public/hustle.png" alt="Hustle" />
+        <div class="cname">Hustle</div>
+        <span class="crate">???</span>
+      </div>
+      <div class="ctile">
+        <img src="public/luck.png" alt="Luck" />
+        <div class="cname">Luck</div>
+        <span class="crate">???</span>
+      </div>
+      <div class="ctile">
+        <img src="public/money.png" alt="Money" />
+        <div class="cname">Money</div>
+        <span class="crate">???</span>
+      </div>
+      <div class="ctile">
+        <img src="public/time.png" alt="Time" />
+        <div class="cname">Time</div>
+        <span class="crate">???</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- BRIEFING + RULES — two column -->
+  <div class="sh sh-gold" style="margin-top:3px;">
+    <span class="star">★</span> TRADING RULES
+  </div>
+
+  <div class="two-col" style="margin:3px 3px 0;">
+    <div class="tcol" style="flex:1;">
+      <ul class="rlist">
+        <li><span class="rn">1</span><span>You have just arrived at a foreign trading post in a foreign kingdom</span></li>
+        <li><span class="rn">2</span><span>In your pocket: currency tokens + a piece of intel. Everyone starts with the same amount</span></li>
+        <li><span class="rn">3</span><span>Nobody knows the true exchange rates — but your intel might give you an edge</span></li>
+        <li><span class="rn">4</span><span>Find other traders. Negotiate, bluff, trade tokens or intel — do anything to increase your total wealth</span></li>
+        <li><span class="rn">5</span><span>When the market closes, true rates are revealed</span></li>
+        <li><span class="rn">6</span><span>Trader with the highest total wealth WINS ★</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- CONTACT -->
+  <div class="sh sh-purple" style="margin-top:3px;">
+    <span class="star">★</span> CONTACT
+  </div>
+
+  <div class="ft">
+    <div class="ft-row">
+      <div class="ft-contact">
+        <a href="mailto:rectanglerepair@gmail.com">rectanglerepair@gmail.com</a><br />
+<a href="https://rect.repair/">rect.repair</a>
+<br />
+        +86 130 4206 7864
+      </div>
+    </div>
+  </div>
+
+  <div class="bot-bar">★ HAPPY TRADING POST ★ rect.repair/happy-trading-post ★ 2026 ★</div>
+
+</div>
+
+<!-- SVG filter: turbulence displacement for hand-drawn rough edges -->
+<svg width="0" height="0" style="position:absolute;overflow:hidden;">
+  <defs>
+    <filter id="charcoal" x="-5%" y="-40%" width="110%" height="180%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.045" numOctaves="4" seed="3" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="2.5" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+  </defs>
+</svg>
+</body>
+</html>
