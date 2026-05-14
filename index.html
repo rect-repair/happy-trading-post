@@ -82,7 +82,15 @@
       border-right: 1px solid #e0c0a0;
     }
     .m-lbl  { font-size: 8px; color: #888; text-transform: uppercase; letter-spacing: .5px; }
-    .m-time { font-size: 28px; font-weight: 900; color: #cc0000; line-height: 1; letter-spacing: -1px; }
+    .m-time {
+      font-size: 26px;
+      font-weight: 900;
+      color: #cc0000;
+      line-height: 1.05;
+      letter-spacing: -1px;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+    }
     .m-dash { font-size: 11px; font-weight: bold; color: #cc0000; }
     .tz {
       display: inline-block; background: #1a5c0a; color: #f1fa0b;
@@ -209,8 +217,22 @@
       font-size: 10px;
       color: #b8e898;
       line-height: 1.8;
+      text-align: right;
     }
     .ft-contact a { color: #f1fa0b; text-decoration: none; font-weight: bold; }
+    .ft-email-stack {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      width: 100%;
+      line-height: 1.25;
+    }
+    .ft-credit {
+      font-size: 8px;
+      color: #90c870;
+      opacity: .95;
+      margin-bottom: 1px;
+    }
 
     .ft-urlbox {
       border: 1.5px solid #f1fa0b;
@@ -266,8 +288,8 @@
   <div class="market-wrap">
     <div class="market-body">
       <div class="market-left">
-        <div class="m-lbl">closes at</div>
-        <div class="m-time">14:30</div>
+        <div class="m-lbl">closes in</div>
+        <div class="m-time" id="close-countdown" aria-live="polite">--:--:--</div>
         <div><span class="tz">CEST</span></div>
       </div>
       <div class="market-right">
@@ -360,9 +382,11 @@
   <div class="ft">
     <div class="ft-row">
       <div class="ft-contact">
-        <a href="mailto:rectanglerepair@gmail.com">rectanglerepair@gmail.com</a><br />
-<a href="https://rect.repair/">rect.repair</a>
-<br />
+        <div class="ft-email-stack">
+          <span class="ft-credit">(created by joanna & tianqi)</span>
+          <a href="mailto:rectanglerepair@gmail.com">rectanglerepair@gmail.com</a>
+        </div>
+        <a href="https://rect.repair/">visit rect.repair for more</a><br />
         +86 130 4206 7864
       </div>
     </div>
@@ -381,5 +405,100 @@
     </filter>
   </defs>
 </svg>
+<script>
+(function () {
+  var TZ = 'Europe/Berlin';
+
+  function berlinYMD(d) {
+    var s = new Intl.DateTimeFormat('en-CA', {
+      timeZone: TZ,
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+    }).format(d);
+    var parts = s.split('-').map(Number);
+    return { y: parts[0], m: parts[1], d: parts[2] };
+  }
+
+  function addGregorianDays(y, m, d, delta) {
+    var x = new Date(Date.UTC(y, m - 1, d + delta));
+    return { y: x.getUTCFullYear(), m: x.getUTCMonth() + 1, d: x.getUTCDate() };
+  }
+
+  function utcAtBerlinWallClock(y, mon, day, hour, min) {
+    var partsFmt = new Intl.DateTimeFormat('en-GB', {
+      timeZone: TZ,
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: false,
+    });
+    function pick(parts, type) {
+      for (var i = 0; i < parts.length; i++) {
+        if (parts[i].type === type) return parseInt(parts[i].value, 10);
+      }
+      return NaN;
+    }
+    var lo = Date.UTC(y, mon - 1, day, hour - 3, min, 0);
+    var hi = Date.UTC(y, mon - 1, day, hour + 3, min, 0);
+    for (var t = lo; t <= hi; t += 1000) {
+      var p = partsFmt.formatToParts(new Date(t));
+      if (
+        pick(p, 'year') === y &&
+        pick(p, 'month') === mon &&
+        pick(p, 'day') === day &&
+        pick(p, 'hour') === hour &&
+        pick(p, 'minute') === min &&
+        pick(p, 'second') === 0
+      ) {
+        return t;
+      }
+    }
+    return null;
+  }
+
+  function targetTomorrow1450Ms() {
+    var today = berlinYMD(new Date());
+    var tm = addGregorianDays(today.y, today.m, today.d, 1);
+    return utcAtBerlinWallClock(tm.y, tm.m, tm.d, 14, 50);
+  }
+
+  function pad2(n) {
+    return (n < 10 ? '0' : '') + n;
+  }
+
+  function formatRemaining(ms) {
+    if (ms <= 0) return '00:00:00';
+    var s = Math.floor(ms / 1000);
+    var days = Math.floor(s / 86400);
+    var rest = s % 86400;
+    var h = Math.floor(rest / 3600);
+    rest %= 3600;
+    var mi = Math.floor(rest / 60);
+    var sec = rest % 60;
+    if (days > 0) return days + 'd ' + pad2(h) + ':' + pad2(mi) + ':' + pad2(sec);
+    return pad2(h) + ':' + pad2(mi) + ':' + pad2(sec);
+  }
+
+  var el = document.getElementById('close-countdown');
+  if (!el) return;
+
+  function tick() {
+    var target = targetTomorrow1450Ms();
+    if (target == null) {
+      el.textContent = '14:50 CEST';
+      return;
+    }
+    var left = target - Date.now();
+    el.textContent = formatRemaining(left);
+  }
+
+  tick();
+  setInterval(tick, 1000);
+})();
+</script>
 </body>
 </html>
