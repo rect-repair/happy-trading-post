@@ -22,19 +22,11 @@
   </div>
 
   <div class="market-wrap">
-    <div class="market-body">
-      <div class="market-left">
-        <div class="m-lbl">closes in</div>
-        <div class="m-time" id="close-countdown" aria-live="polite">--:--:--</div>
-        <div><span class="tz">CEST</span></div>
-      </div>
-      <div class="market-right">
-        <div class="m-date">Friday<br/>May 15, 2026</div>
-        <div class="m-venue">Betonhalle Stage</div>
-        <div class="m-venue">Silent Green</div>
-      </div>
-    </div>
-    <div class="market-warn">★💸₊˚⊹♡★˚₊‧꒰ა $ ໒꒱ ‧₊˚★💸₊˚⊹♡★˚₊‧꒰ა $ ໒꒱ ‧₊˚</div>
+    <p class="market-closed-msg">
+      Market is closed! Thanks for playing! If you have cool stories or any feedback from the game please email
+      <a href="mailto:joannalyu19@gmail.com">joannalyu19@gmail.com</a>
+      or find me on Discord id: <strong>1y01yyu</strong>
+    </p>
   </div>
 
   <!-- CURRENCY TOKENS -->
@@ -42,54 +34,54 @@
     <span class="star">★</span> CURRENCY TOKENS
   </div>
 
-  <div class="cgrid-wrap">
-    <div class="cgrid">
-      <div class="ctile">
-        <img src="public/bonds.png" alt="Bonds" />
-        <div class="cname">Bonds</div>
-        <span class="crate">???</span>
-      </div>
-      <div class="ctile">
-        <img src="public/computer.png" alt="Computer" />
-        <div class="cname">Computer</div>
-        <span class="crate">???</span>
-      </div>
-      <div class="ctile">
-        <img src="public/dream.png" alt="Dream" />
-        <div class="cname">Dream</div>
-        <span class="crate">???</span>
-      </div>
-      <div class="ctile">
-        <img src="public/fame.png" alt="Fame" />
-        <div class="cname">Fame</div>
-        <span class="crate">???</span>
-      </div>
-      <div class="ctile">
-        <img src="public/health.png" alt="Health" />
-        <div class="cname">Health</div>
-        <span class="crate">???</span>
-      </div>
-      <div class="ctile">
-        <img src="public/hustle.png" alt="Hustle" />
-        <div class="cname">Hustle</div>
-        <span class="crate">???</span>
-      </div>
-      <div class="ctile">
-        <img src="public/luck.png" alt="Luck" />
-        <div class="cname">Luck</div>
-        <span class="crate">???</span>
-      </div>
-      <div class="ctile">
-        <img src="public/money.png" alt="Money" />
-        <div class="cname">Money</div>
-        <span class="crate">???</span>
-      </div>
-      <div class="ctile">
-        <img src="public/time.png" alt="Time" />
-        <div class="cname">Time</div>
-        <span class="crate">???</span>
-      </div>
-    </div>
+  <div class="clist-wrap">
+    <ol class="clist">
+      <li class="crow">
+        <img src="public/fame.png" alt="" />
+        <span class="cname">Fame</span>
+        <span class="crate">10</span>
+      </li>
+      <li class="crow">
+        <img src="public/hustle.png" alt="" />
+        <span class="cname">Hustle</span>
+        <span class="crate">5</span>
+      </li>
+      <li class="crow">
+        <img src="public/computer.png" alt="" />
+        <span class="cname">Computer</span>
+        <span class="crate">2</span>
+      </li>
+      <li class="crow">
+        <img src="public/luck.png" alt="" />
+        <span class="cname">Luck</span>
+        <span class="crate">1</span>
+      </li>
+      <li class="crow">
+        <img src="public/money.png" alt="" />
+        <span class="cname">Money</span>
+        <span class="crate">0</span>
+      </li>
+      <li class="crow">
+        <img src="public/dream.png" alt="" />
+        <span class="cname">Dream</span>
+        <span class="crate">-1</span>
+      </li>
+      <li class="crow">
+        <img src="public/bonds.png" alt="" />
+        <span class="cname">Bonds</span>
+        <span class="crate">-3</span>
+      </li>
+      <li class="crow">
+        <img src="public/time.png" alt="" />
+        <span class="cname">Time</span>
+        <span class="crate">-6</span>
+      </li>
+      <li class="crow">
+        <img src="public/health.png" alt="" />
+        <span class="cname">Health</span>
+        <span class="crate">-10</span>
+      </li>
+    </ol>
   </div>
 
   <!-- BRIEFING + RULES — two column -->
@@ -141,100 +133,5 @@
     </filter>
   </defs>
 </svg>
-<script>
-(function () {
-  var TZ = 'Europe/Berlin';
-
-  function berlinYMD(d) {
-    var s = new Intl.DateTimeFormat('en-CA', {
-      timeZone: TZ,
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
-    }).format(d);
-    var parts = s.split('-').map(Number);
-    return { y: parts[0], m: parts[1], d: parts[2] };
-  }
-
-  function addGregorianDays(y, m, d, delta) {
-    var x = new Date(Date.UTC(y, m - 1, d + delta));
-    return { y: x.getUTCFullYear(), m: x.getUTCMonth() + 1, d: x.getUTCDate() };
-  }
-
-  function utcAtBerlinWallClock(y, mon, day, hour, min) {
-    var partsFmt = new Intl.DateTimeFormat('en-GB', {
-      timeZone: TZ,
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
-      hour: '2-digit',
-      minute: '2-digit',
-      second: '2-digit',
-      hour12: false,
-    });
-    function pick(parts, type) {
-      for (var i = 0; i < parts.length; i++) {
-        if (parts[i].type === type) return parseInt(parts[i].value, 10);
-      }
-      return NaN;
-    }
-    var lo = Date.UTC(y, mon - 1, day, hour - 3, min, 0);
-    var hi = Date.UTC(y, mon - 1, day, hour + 3, min, 0);
-    for (var t = lo; t <= hi; t += 1000) {
-      var p = partsFmt.formatToParts(new Date(t));
-      if (
-        pick(p, 'year') === y &&
-        pick(p, 'month') === mon &&
-        pick(p, 'day') === day &&
-        pick(p, 'hour') === hour &&
-        pick(p, 'minute') === min &&
-        pick(p, 'second') === 0
-      ) {
-        return t;
-      }
-    }
-    return null;
-  }
-
-  function targetTomorrow1450Ms() {
-    var today = berlinYMD(new Date());
-    var tm = addGregorianDays(today.y, today.m, today.d, 1);
-    return utcAtBerlinWallClock(tm.y, tm.m, tm.d, 14, 50);
-  }
-
-  function pad2(n) {
-    return (n < 10 ? '0' : '') + n;
-  }
-
-  function formatRemaining(ms) {
-    if (ms <= 0) return '00:00:00';
-    var s = Math.floor(ms / 1000);
-    var days = Math.floor(s / 86400);
-    var rest = s % 86400;
-    var h = Math.floor(rest / 3600);
-    rest %= 3600;
-    var mi = Math.floor(rest / 60);
-    var sec = rest % 60;
-    if (days > 0) return days + 'd ' + pad2(h) + ':' + pad2(mi) + ':' + pad2(sec);
-    return pad2(h) + ':' + pad2(mi) + ':' + pad2(sec);
-  }
-
-  var el = document.getElementById('close-countdown');
-  if (!el) return;
-
-  function tick() {
-    var target = targetTomorrow1450Ms();
-    if (target == null) {
-      el.textContent = '14:50 CEST';
-      return;
-    }
-    var left = target - Date.now();
-    el.textContent = formatRemaining(left);
-  }
-
-  tick();
-  setInterval(tick, 1000);
-})();
-</script>
 </body>
 </html>
