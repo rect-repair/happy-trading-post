@@ -8,7 +8,7 @@
 }
 
 body {
-  font-family: 'Fredoka', sans-serif;
+  font-family: 'Fredoka', 'PingFang SC', 'Microsoft YaHei', sans-serif;
   background: #aaa;
   font-size: 11px;
   line-height: 1.3;
@@ -71,19 +71,18 @@ body {
 
 /* ══ MARKET BOX ══ */
 .market-wrap { margin: 3px 3px 0; border: 1px solid #c00; background: #fffef0; }
-.market-closed-msg {
-  padding: 8px 10px;
-  font-size: 10px;
-  line-height: 1.55;
-  color: #222;
-  margin: 0;
-}
-.market-closed-msg a {
+.market-announce {
+  padding: 10px 12px 4px;
+  font-size: 16px;
+  font-weight: 900;
+  line-height: 1.45;
   color: #cc0000;
-  font-weight: bold;
-  text-decoration: none;
+  margin: 0;
+  text-align: center;
 }
-.market-closed-msg strong { color: #1a5c0a; }
+.market-announce:last-child {
+  padding-bottom: 12px;
+}
 .market-body { display: flex; }
 
 .market-left {
@@ -125,48 +124,25 @@ body {
   text-align: center; padding: 2px 4px;
 }
 
-/* ══ CURRENCY LIST (single column) ══ */
-.clist-wrap {
+/* ══ GAME BRIEF (Chinese) ══ */
+.brief-wrap {
   margin: 3px 3px 0;
-  border: 1px solid #aaa;
+  border: 1px solid #bbb;
   background: #fff;
-  max-width: 140px;
+  padding: 8px 10px;
 }
-.clist {
-  list-style: none;
-  padding: 2px 4px;
-  margin: 0;
-}
-.crow {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  padding: 1px 0;
-  border-bottom: 1px dotted #ddd;
-  line-height: 1.2;
-}
-.crow:last-child { border-bottom: none; }
-.crow img {
-  width: 18px;
-  height: 18px;
-  object-fit: cover;
-  flex-shrink: 0;
-  border: 1px solid #ccc;
-}
-.crow .cname {
-  flex: 1;
-  font-size: 8px;
+.brief-wrap p {
+  font-size: 11px;
+  line-height: 1.75;
   color: #333;
-  min-width: 0;
+  margin: 0 0 10px;
+  text-align: justify;
 }
-.crow .crate {
-  font-size: 10px;
-  font-weight: 900;
+.brief-wrap p:last-child { margin-bottom: 0; }
+.brief-lead {
+  font-size: 13px;
+  font-weight: 700;
   color: #cc0000;
-  font-variant-numeric: tabular-nums;
-  flex-shrink: 0;
-  min-width: 1.5em;
-  text-align: right;
 }
 
 /* ══ TWO COLUMN BODY ══ */

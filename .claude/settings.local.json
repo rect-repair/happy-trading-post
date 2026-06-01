@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "Bash(sips -g pixelWidth -g pixelHeight \"/Users/joannamac/Documents/Projects/20240925 修四边形/43- happy trading post外汇游戏 K11活动/happy trading post site/public/dream.png\")",
-      "Bash(git push *)"
+      "Bash(git push *)",
+      "mcp__Claude_Preview__preview_start"
     ]
   }
 }

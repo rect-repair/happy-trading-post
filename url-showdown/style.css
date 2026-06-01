@@ -1,0 +1,996 @@
+/* ============================================================
+   URL SHOWDOWN: WIN98 EDITION — style.css
+   Pure Windows 98 Desktop UI. Zero external dependencies.
+   ============================================================ */
+
+/* === RESET === */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* === BASE === */
+body {
+  font-family: 'MS Sans Serif', 'Tahoma', 'Arial', sans-serif;
+  font-size: 11px;
+  background: #008080;
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+  -webkit-font-smoothing: none;
+  -moz-osx-font-smoothing: grayscale;
+  image-rendering: pixelated;
+  color: #000000;
+}
+
+/* === DESKTOP === */
+#desktop {
+  width: 100vw;
+  height: 100vh;
+  background: #008080;
+  background-image:
+    radial-gradient(circle at 20% 80%, rgba(0,100,100,0.15) 0%, transparent 40%),
+    radial-gradient(circle at 80% 20%, rgba(0,80,80,0.12) 0%, transparent 40%);
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 14px 14px 46px 14px;
+  gap: 12px;
+  overflow: hidden;
+}
+
+/* ============================================================
+   WIN98 WINDOW BASE
+   ============================================================ */
+.win98-window {
+  background: #c0c0c0;
+  /* Outer bevel: bright top-left, dark bottom-right */
+  border-top:    2px solid #ffffff;
+  border-left:   2px solid #ffffff;
+  border-right:  2px solid #404040;
+  border-bottom: 2px solid #404040;
+  /* Inner bevel */
+  box-shadow:
+    inset 1px 1px 0 #dfdfdf,
+    inset -1px -1px 0 #808080,
+    3px 3px 0 #000000;
+  display: flex;
+  flex-direction: column;
+  min-width: 200px;
+}
+
+/* ============================================================
+   TITLE BAR
+   ============================================================ */
+.title-bar {
+  background: linear-gradient(90deg, #000080 0%, #1084d0 100%);
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 11px;
+  padding: 3px 4px 3px 6px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  user-select: none;
+  min-height: 22px;
+  cursor: default;
+}
+
+.title-bar.draggable {
+  cursor: move;
+}
+
+.title-icon {
+  font-size: 12px;
+  flex-shrink: 0;
+  filter: brightness(10);
+}
+
+.title-bar-text {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 11px;
+  letter-spacing: 0.3px;
+  text-shadow: 1px 1px 0 rgba(0,0,0,0.5);
+}
+
+.title-bar-controls {
+  display: flex;
+  gap: 2px;
+  margin-left: 4px;
+  flex-shrink: 0;
+}
+
+.title-btn {
+  width: 16px;
+  height: 14px;
+  background: #c0c0c0;
+  border-top:    1px solid #ffffff;
+  border-left:   1px solid #ffffff;
+  border-right:  1px solid #808080;
+  border-bottom: 1px solid #808080;
+  color: #000000;
+  font-size: 8px;
+  font-family: 'MS Sans Serif', Tahoma, sans-serif;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.title-btn:active {
+  border-top:    1px solid #808080;
+  border-left:   1px solid #808080;
+  border-right:  1px solid #ffffff;
+  border-bottom: 1px solid #ffffff;
+  padding-top: 1px;
+  padding-left: 1px;
+}
+
+/* ============================================================
+   MENU BAR
+   ============================================================ */
+.menu-bar {
+  display: flex;
+  background: #c0c0c0;
+  border-bottom: 1px solid #808080;
+  padding: 1px 2px;
+  gap: 0;
+  flex-shrink: 0;
+}
+
+.menu-item {
+  padding: 3px 8px;
+  font-size: 11px;
+  cursor: default;
+  white-space: nowrap;
+}
+
+.menu-item:hover {
+  background: #000080;
+  color: #ffffff;
+}
+
+/* ============================================================
+   WINDOW BODY
+   ============================================================ */
+.window-body {
+  padding: 8px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-height: 0;
+}
+
+/* ============================================================
+   ARENA WINDOW
+   ============================================================ */
+#arena-window {
+  width: 680px;
+  flex-shrink: 0;
+  align-self: flex-start;
+  margin-top: 16px;
+}
+
+.arena-content {
+  display: flex;
+  align-items: stretch;
+  gap: 8px;
+  background: #ffffff;
+  border-top:    2px solid #808080;
+  border-left:   2px solid #808080;
+  border-right:  2px solid #dfdfdf;
+  border-bottom: 2px solid #dfdfdf;
+  padding: 10px;
+  flex-shrink: 0;
+}
+
+/* ============================================================
+   PLAYER PANELS
+   ============================================================ */
+.player-panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px;
+  background: #c0c0c0;
+  border-top:    2px solid #ffffff;
+  border-left:   2px solid #ffffff;
+  border-right:  2px solid #808080;
+  border-bottom: 2px solid #808080;
+}
+
+.player-label {
+  font-weight: bold;
+  font-size: 12px;
+  text-align: center;
+  letter-spacing: 2px;
+  padding: 5px 6px;
+  color: #ffffff;
+  text-shadow: 1px 1px 0 rgba(0,0,0,0.6);
+}
+
+.p1-label {
+  background: linear-gradient(90deg, #000080 0%, #0044cc 100%);
+  border-top:    1px solid #4466ff;
+  border-bottom: 1px solid #000044;
+}
+
+.p2-label {
+  background: linear-gradient(90deg, #800000 0%, #cc0000 100%);
+  border-top:    1px solid #ff4444;
+  border-bottom: 1px solid #440000;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.input-group label {
+  font-size: 11px;
+  font-weight: bold;
+}
+
+.win98-input {
+  font-family: 'MS Sans Serif', 'Tahoma', monospace;
+  font-size: 11px;
+  background: #ffffff;
+  color: #000000;
+  border-top:    2px solid #808080;
+  border-left:   2px solid #808080;
+  border-right:  2px solid #ffffff;
+  border-bottom: 2px solid #ffffff;
+  padding: 3px 5px;
+  outline: none;
+  width: 100%;
+}
+
+.win98-input:focus {
+  outline: 1px dotted #000080;
+  outline-offset: -2px;
+}
+
+/* mini stats block */
+.player-stats {
+  background: #f0f0f0;
+  border-top:    1px solid #808080;
+  border-left:   1px solid #808080;
+  border-right:  1px solid #ffffff;
+  border-bottom: 1px solid #ffffff;
+  padding: 5px 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.stat-line {
+  display: flex;
+  justify-content: space-between;
+  font-size: 10px;
+  font-family: monospace;
+}
+
+.stat-key {
+  color: #808080;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+}
+
+.stat-val {
+  color: #000080;
+  font-weight: bold;
+}
+
+.score-display {
+  font-size: 15px;
+  font-weight: bold;
+  text-align: center;
+  padding: 7px 6px;
+  font-family: 'Courier New', monospace;
+  letter-spacing: 2px;
+  background: #000000;
+  color: #00ff00;
+  border-top:    2px solid #404040;
+  border-left:   2px solid #404040;
+  border-right:  2px solid #808080;
+  border-bottom: 2px solid #808080;
+  text-shadow: 0 0 6px #00ff00;
+}
+
+.p2-score { color: #ff4444; text-shadow: 0 0 6px #ff4444; }
+
+/* ============================================================
+   VS PANEL
+   ============================================================ */
+.vs-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 0 8px;
+  flex-shrink: 0;
+}
+
+.vs-text {
+  font-size: 40px;
+  font-weight: 900;
+  font-family: 'Impact', 'Arial Black', 'Arial', sans-serif;
+  color: #800000;
+  text-shadow:
+    2px 2px 0 #000000,
+    -1px -1px 0 #ff6666;
+  letter-spacing: 4px;
+  line-height: 1;
+}
+
+.round-badge {
+  background: #c0c0c0;
+  border-top:    2px solid #ffffff;
+  border-left:   2px solid #ffffff;
+  border-right:  2px solid #808080;
+  border-bottom: 2px solid #808080;
+  padding: 5px 10px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 11px;
+  letter-spacing: 1px;
+  line-height: 1.4;
+  min-width: 58px;
+}
+
+.battle-status-badge {
+  background: #000080;
+  color: #ffffff;
+  padding: 3px 10px;
+  font-size: 10px;
+  font-weight: bold;
+  letter-spacing: 2px;
+  text-align: center;
+  min-width: 70px;
+}
+
+/* ============================================================
+   BATTLE CONTROLS
+   ============================================================ */
+.battle-controls {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  align-items: center;
+  padding: 4px 0 2px;
+  flex-shrink: 0;
+}
+
+/* ============================================================
+   WIN98 BUTTONS
+   ============================================================ */
+.win98-btn {
+  font-family: 'MS Sans Serif', 'Tahoma', sans-serif;
+  font-size: 11px;
+  background: #c0c0c0;
+  border-top:    2px solid #ffffff;
+  border-left:   2px solid #ffffff;
+  border-right:  2px solid #808080;
+  border-bottom: 2px solid #808080;
+  padding: 4px 14px;
+  cursor: pointer;
+  color: #000000;
+  white-space: nowrap;
+  min-width: 75px;
+  text-align: center;
+  line-height: 1.3;
+}
+
+.win98-btn:hover {
+  background: #d4d4d4;
+}
+
+.win98-btn:active {
+  border-top:    2px solid #808080;
+  border-left:   2px solid #808080;
+  border-right:  2px solid #ffffff;
+  border-bottom: 2px solid #ffffff;
+  padding: 5px 13px 3px 15px;
+}
+
+.win98-btn:focus {
+  outline: 1px dotted #000000;
+  outline-offset: -4px;
+}
+
+.win98-btn:disabled {
+  color: #808080;
+  text-shadow: 1px 1px 0 #ffffff;
+  cursor: not-allowed;
+}
+
+.win98-btn:disabled:active {
+  border-top:    2px solid #ffffff;
+  border-left:   2px solid #ffffff;
+  border-right:  2px solid #808080;
+  border-bottom: 2px solid #808080;
+  padding: 4px 14px;
+}
+
+.battle-btn {
+  font-size: 13px;
+  font-weight: bold;
+  padding: 7px 28px;
+  letter-spacing: 1px;
+  min-width: 200px;
+  border: 2px solid #000080;
+  border-top-color:  #6666ff;
+  border-left-color: #6666ff;
+}
+
+.battle-btn:active {
+  border-top-color:    #808080;
+  border-left-color:   #808080;
+  border-right-color:  #ffffff;
+  border-bottom-color: #ffffff;
+}
+
+.secondary-btn {
+  font-size: 11px;
+  color: #404040;
+}
+
+.small-btn {
+  padding: 2px 8px;
+  font-size: 10px;
+  min-width: auto;
+}
+
+.modal-ok-btn {
+  min-width: 120px;
+  font-weight: bold;
+}
+
+/* ============================================================
+   STATUS BAR
+   ============================================================ */
+.status-bar {
+  display: flex;
+  gap: 2px;
+  border-top: 1px solid #808080;
+  padding-top: 4px;
+  margin-top: auto;
+  flex-shrink: 0;
+}
+
+.status-bar span {
+  font-size: 10px;
+  padding: 2px 6px;
+  border-top:    1px solid #808080;
+  border-left:   1px solid #808080;
+  border-right:  1px solid #ffffff;
+  border-bottom: 1px solid #ffffff;
+  background: #c0c0c0;
+}
+
+.status-main { flex: 1; }
+.status-side  { flex-shrink: 0; white-space: nowrap; }
+.status-sep   { width: 3px; flex: 0 !important; padding: 0 !important; background: transparent !important; border: none !important; }
+
+/* ============================================================
+   LEADERBOARD WINDOW
+   ============================================================ */
+#leaderboard-window {
+  width: 290px;
+  flex-shrink: 0;
+  align-self: flex-start;
+  margin-top: 16px;
+  max-height: calc(100vh - 60px);
+  display: flex;
+  flex-direction: column;
+}
+
+.lb-body {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.lb-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #808080;
+  margin-bottom: 4px;
+  flex-shrink: 0;
+}
+
+.toolbar-path {
+  font-family: 'Courier New', monospace;
+  font-size: 10px;
+  background: #ffffff;
+  border-top:    1px solid #808080;
+  border-left:   1px solid #808080;
+  border-right:  1px solid #ffffff;
+  border-bottom: 1px solid #ffffff;
+  padding: 2px 4px;
+  flex: 1;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.file-manager-header {
+  display: flex;
+  background: #c0c0c0;
+  border-bottom: 2px solid #808080;
+  flex-shrink: 0;
+}
+
+.file-manager-header span {
+  font-size: 10px;
+  font-weight: bold;
+  padding: 3px 6px;
+  border-right:  1px solid #808080;
+  border-top:    1px solid #ffffff;
+  border-left:   1px solid #ffffff;
+  cursor: default;
+  white-space: nowrap;
+}
+
+.fmh-rank { width: 44px; text-align: center; }
+.fmh-url  { flex: 1; }
+.fmh-wins { width: 44px; text-align: right; }
+
+.file-manager-list {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: #ffffff;
+  border-top:    2px solid #808080;
+  border-left:   2px solid #808080;
+  border-right:  2px solid #dfdfdf;
+  border-bottom: 2px solid #dfdfdf;
+  min-height: 180px;
+  max-height: calc(100vh - 260px);
+}
+
+/* Scrollbar — Win98 style */
+.file-manager-list::-webkit-scrollbar       { width: 16px; }
+.file-manager-list::-webkit-scrollbar-track { background: #c0c0c0; }
+.file-manager-list::-webkit-scrollbar-thumb {
+  background: #c0c0c0;
+  border-top:    2px solid #ffffff;
+  border-left:   2px solid #ffffff;
+  border-right:  2px solid #808080;
+  border-bottom: 2px solid #808080;
+  min-height: 20px;
+}
+.file-manager-list::-webkit-scrollbar-button {
+  background: #c0c0c0;
+  border-top:    2px solid #ffffff;
+  border-left:   2px solid #ffffff;
+  border-right:  2px solid #808080;
+  border-bottom: 2px solid #808080;
+  height: 16px;
+}
+
+/* Leaderboard rows */
+.lb-row {
+  display: flex;
+  align-items: center;
+  font-size: 10px;
+  border-bottom: 1px solid #eeeeee;
+  cursor: default;
+  min-height: 20px;
+}
+
+.lb-row:nth-child(even) { background: #f5f5f5; }
+.lb-row:nth-child(odd)  { background: #ffffff; }
+
+.lb-row:hover { background: #000080; color: #ffffff; }
+
+.lb-row .lr-rank {
+  width: 44px;
+  text-align: center;
+  font-weight: bold;
+  color: #808080;
+  padding: 3px 4px;
+  flex-shrink: 0;
+  font-size: 11px;
+}
+
+.lb-row:hover .lr-rank { color: #ffdd00; }
+
+.lb-row .lr-url {
+  flex: 1;
+  padding: 3px 4px;
+  font-family: 'Courier New', monospace;
+  font-size: 9px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.lb-row .lr-wins {
+  width: 44px;
+  text-align: right;
+  font-weight: bold;
+  color: #000080;
+  padding: 3px 6px;
+  flex-shrink: 0;
+}
+
+.lb-row:hover .lr-wins { color: #ffffff; }
+
+.lb-empty {
+  padding: 24px 12px;
+  text-align: center;
+  color: #808080;
+  font-style: italic;
+  font-size: 11px;
+}
+
+/* ============================================================
+   MODAL OVERLAY
+   ============================================================ */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.0);
+  align-items: center;
+  justify-content: center;
+  z-index: 900;
+  pointer-events: none;
+}
+
+.modal-overlay.visible {
+  display: flex;
+  pointer-events: all;
+}
+
+.modal-window {
+  min-width: 340px;
+  max-width: 500px;
+  pointer-events: all;
+  box-shadow:
+    inset 1px 1px 0 #dfdfdf,
+    inset -1px -1px 0 #808080,
+    5px 5px 0 #000000;
+}
+
+.modal-body {
+  padding: 14px 16px;
+  gap: 12px;
+}
+
+/* ============================================================
+   BATTLE RULE MODAL CONTENT
+   ============================================================ */
+.rule-card {
+  background: #ffffff;
+  border-top:    2px solid #808080;
+  border-left:   2px solid #808080;
+  border-right:  2px solid #dfdfdf;
+  border-bottom: 2px solid #dfdfdf;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 4px;
+}
+
+.rule-emoji {
+  font-size: 36px;
+  line-height: 1;
+}
+
+.rule-name {
+  font-size: 15px;
+  font-weight: bold;
+  color: #000080;
+  letter-spacing: 2px;
+  text-align: center;
+  padding: 6px 10px;
+  background: #c0c0c0;
+  border-top:    1px solid #ffffff;
+  border-left:   1px solid #ffffff;
+  border-right:  1px solid #808080;
+  border-bottom: 1px solid #808080;
+  width: 100%;
+}
+
+.rule-desc {
+  font-size: 12px;
+  text-align: center;
+  line-height: 1.5;
+  padding: 0 8px;
+  color: #000000;
+}
+
+.rule-metric {
+  font-size: 10px;
+  color: #808080;
+  font-family: 'Courier New', monospace;
+  background: #f0f0f0;
+  border: 1px solid #c0c0c0;
+  padding: 4px 8px;
+  text-align: center;
+  width: 100%;
+}
+
+/* ============================================================
+   PROGRESS MODAL CONTENT
+   ============================================================ */
+.progress-content {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 340px;
+}
+
+.progress-label {
+  font-size: 11px;
+  font-weight: bold;
+  min-height: 16px;
+}
+
+.win98-progress-bar {
+  height: 22px;
+  background: #ffffff;
+  border-top:    2px solid #808080;
+  border-left:   2px solid #808080;
+  border-right:  2px solid #dfdfdf;
+  border-bottom: 2px solid #dfdfdf;
+  padding: 2px 2px;
+  overflow: hidden;
+}
+
+.progress-track {
+  height: 100%;
+  display: flex;
+  gap: 2px;
+  align-items: stretch;
+}
+
+.progress-block {
+  width: 12px;
+  flex-shrink: 0;
+  background: #000080;
+  display: inline-block;
+}
+
+.progress-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.progress-pct {
+  font-family: 'Courier New', monospace;
+  font-size: 11px;
+  font-weight: bold;
+  color: #000080;
+  min-width: 36px;
+}
+
+.progress-detail {
+  font-size: 10px;
+  color: #808080;
+  font-family: 'Courier New', monospace;
+  text-align: right;
+  flex: 1;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* ============================================================
+   RESULTS MODAL CONTENT
+   ============================================================ */
+.results-window { min-width: 420px; }
+
+.winner-banner {
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  color: #ffffff;
+  padding: 10px;
+  letter-spacing: 4px;
+  animation: banner-flash 0.8s step-end infinite;
+  margin-bottom: 2px;
+}
+
+@keyframes banner-flash {
+  0%,  49% { background: linear-gradient(90deg, #000080 0%, #1084d0 100%); }
+  50%, 100% { background: linear-gradient(90deg, #800000 0%, #cc2200 100%); }
+}
+
+.winner-url-box {
+  font-family: 'Courier New', monospace;
+  font-size: 11px;
+  font-weight: bold;
+  text-align: center;
+  padding: 7px 10px;
+  background: #ffffcc;
+  border-top:    2px solid #808080;
+  border-left:   2px solid #808080;
+  border-right:  2px solid #ffffff;
+  border-bottom: 2px solid #ffffff;
+  word-break: break-all;
+  color: #000080;
+}
+
+.battle-stats-log {
+  font-family: 'Courier New', monospace;
+  font-size: 10px;
+  background: #000000;
+  color: #00ff00;
+  padding: 10px 12px;
+  line-height: 1.7;
+  border-top:    2px solid #404040;
+  border-left:   2px solid #404040;
+  border-right:  2px solid #808080;
+  border-bottom: 2px solid #808080;
+  white-space: pre;
+  overflow-x: auto;
+  text-shadow: 0 0 4px #00aa00;
+}
+
+.simulated-notice {
+  display: none;
+  font-size: 10px;
+  color: #804000;
+  background: #ffffe0;
+  border: 1px solid #c0a000;
+  padding: 5px 10px;
+  font-style: italic;
+  text-align: center;
+}
+
+/* ============================================================
+   TASKBAR
+   ============================================================ */
+#taskbar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 40px;
+  background: #c0c0c0;
+  border-top: 2px solid #ffffff;
+  box-shadow: 0 -1px 0 #808080;
+  display: flex;
+  align-items: center;
+  padding: 2px 4px;
+  gap: 4px;
+  z-index: 800;
+}
+
+.start-btn {
+  font-family: 'MS Sans Serif', 'Tahoma', sans-serif;
+  font-size: 12px;
+  font-weight: bold;
+  background: #c0c0c0;
+  border-top:    2px solid #ffffff;
+  border-left:   2px solid #ffffff;
+  border-right:  2px solid #808080;
+  border-bottom: 2px solid #808080;
+  padding: 3px 14px 3px 10px;
+  cursor: pointer;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-shrink: 0;
+}
+
+.start-btn:active {
+  border-top:    2px solid #808080;
+  border-left:   2px solid #808080;
+  border-right:  2px solid #ffffff;
+  border-bottom: 2px solid #ffffff;
+}
+
+.win-logo { font-size: 16px; }
+
+.taskbar-divider {
+  width: 4px;
+  height: 30px;
+  border-left:  1px solid #808080;
+  border-right: 1px solid #ffffff;
+  flex-shrink: 0;
+}
+
+.taskbar-windows {
+  display: flex;
+  gap: 3px;
+  flex: 1;
+  min-width: 0;
+}
+
+.taskbar-item {
+  font-family: 'MS Sans Serif', 'Tahoma', sans-serif;
+  font-size: 11px;
+  background: #c0c0c0;
+  border-top:    2px solid #ffffff;
+  border-left:   2px solid #ffffff;
+  border-right:  2px solid #808080;
+  border-bottom: 2px solid #808080;
+  padding: 3px 12px;
+  cursor: pointer;
+  height: 28px;
+  text-align: left;
+  white-space: nowrap;
+  max-width: 160px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.active-item {
+  border-top:    2px solid #808080;
+  border-left:   2px solid #808080;
+  border-right:  2px solid #ffffff;
+  border-bottom: 2px solid #ffffff;
+  background: #c8c8c8;
+  font-weight: bold;
+}
+
+.taskbar-tray {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 8px;
+  border-top:    1px solid #808080;
+  border-left:   1px solid #808080;
+  border-right:  1px solid #ffffff;
+  border-bottom: 1px solid #ffffff;
+  height: 28px;
+  font-size: 11px;
+  font-weight: bold;
+  flex-shrink: 0;
+  font-family: 'Courier New', monospace;
+}
+
+.tray-icon { font-size: 13px; }
+
+/* ============================================================
+   WINNER FLASH ANIMATION
+   ============================================================ */
+@keyframes winner-flash {
+  0%,  100% { background: #c0c0c0; }
+  20%        { background: #ffff00; box-shadow: inset 1px 1px 0 #ffff99, inset -1px -1px 0 #aaaa00; }
+  40%        { background: #c0c0c0; }
+  60%        { background: #ffff00; box-shadow: inset 1px 1px 0 #ffff99, inset -1px -1px 0 #aaaa00; }
+  80%        { background: #c0c0c0; }
+}
+
+.winner-flash-anim {
+  animation: winner-flash 1.6s ease-in-out;
+}
+
+/* ============================================================
+   RESPONSIVE SAFETY
+   ============================================================ */
+@media (max-width: 1050px) {
+  #desktop {
+    flex-direction: column;
+    align-items: center;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+  #arena-window { width: min(680px, calc(100vw - 28px)); }
+  #leaderboard-window { width: min(680px, calc(100vw - 28px)); }
+  .file-manager-list { max-height: 240px; }
+}

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>URL Showdown: Win98 Edition</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="desktop">
+
+    <!-- ═══════════════ MAIN ARENA WINDOW ═══════════════ -->
+    <div class="win98-window" id="arena-window">
+      <div class="title-bar draggable" id="arena-title-bar">
+        <span class="title-icon">⚔</span>
+        <span class="title-bar-text">URL SHOWDOWN: WIN98 EDITION — Battle Arena</span>
+        <div class="title-bar-controls">
+          <button class="title-btn" title="Minimize">_</button>
+          <button class="title-btn" title="Maximize">□</button>
+          <button class="title-btn close-btn" title="Close">✕</button>
+        </div>
+      </div>
+
+      <div class="menu-bar">
+        <span class="menu-item">File</span>
+        <span class="menu-item">Edit</span>
+        <span class="menu-item" id="menu-battle" onclick="runBattle()">Battle</span>
+        <span class="menu-item">View</span>
+        <span class="menu-item">Help</span>
+      </div>
+
+      <div class="window-body">
+        <div class="arena-content">
+
+          <!-- PLAYER 1 -->
+          <div class="player-panel" id="player1-panel">
+            <div class="player-label p1-label">▶ PLAYER 1</div>
+            <div class="input-group">
+              <label for="url1">Enter URL:</label>
+              <input type="text" id="url1" class="win98-input" placeholder="https://example.com" value="https://en.wikipedia.org">
+            </div>
+            <div class="player-stats" id="p1-stats">
+              <div class="stat-line"><span class="stat-key">STATUS</span><span class="stat-val" id="p1-status">STANDBY</span></div>
+              <div class="stat-line"><span class="stat-key">LAST SCORE</span><span class="stat-val" id="p1-last">---</span></div>
+            </div>
+            <div class="score-display p1-score" id="score1">SCORE: 0</div>
+          </div>
+
+          <!-- VS CENTER -->
+          <div class="vs-panel">
+            <div class="vs-text">VS</div>
+            <div class="round-badge" id="round-display">ROUND<br>1</div>
+            <div class="battle-status-badge" id="battle-status">READY</div>
+          </div>
+
+          <!-- PLAYER 2 -->
+          <div class="player-panel" id="player2-panel">
+            <div class="player-label p2-label">▶ PLAYER 2</div>
+            <div class="input-group">
+              <label for="url2">Enter URL:</label>
+              <input type="text" id="url2" class="win98-input" placeholder="https://example.com" value="https://www.reddit.com">
+            </div>
+            <div class="player-stats" id="p2-stats">
+              <div class="stat-line"><span class="stat-key">STATUS</span><span class="stat-val" id="p2-status">STANDBY</span></div>
+              <div class="stat-line"><span class="stat-key">LAST SCORE</span><span class="stat-val" id="p2-last">---</span></div>
+            </div>
+            <div class="score-display p2-score" id="score2">SCORE: 0</div>
+          </div>
+
+        </div><!-- /arena-content -->
+
+        <div class="battle-controls">
+          <button class="win98-btn battle-btn" id="run-battle-btn" onclick="runBattle()">
+            ▶&nbsp; RUN BATTLE.EXE
+          </button>
+          <button class="win98-btn secondary-btn" onclick="resetSession()">
+            ↺ RESET SESSION
+          </button>
+          <button class="win98-btn secondary-btn" onclick="loadLeaderboard()">
+            ↻ REFRESH SCORES
+          </button>
+        </div>
+
+        <div class="status-bar">
+          <span id="status-text" class="status-main">System ready. Enter URLs and click RUN BATTLE.EXE.</span>
+          <span class="status-sep"></span>
+          <span id="status-round" class="status-side">Round 1</span>
+          <span class="status-sep"></span>
+          <span id="status-conn" class="status-side">PROXY: ALLORIGINS</span>
+        </div>
+      </div><!-- /window-body -->
+    </div><!-- /arena-window -->
+
+
+    <!-- ═══════════════ LEADERBOARD WINDOW ═══════════════ -->
+    <div class="win98-window" id="leaderboard-window">
+      <div class="title-bar draggable" id="leaderboard-title-bar">
+        <span class="title-icon">🏆</span>
+        <span class="title-bar-text">GLOBAL LEADERBOARD.txt — File Manager</span>
+        <div class="title-bar-controls">
+          <button class="title-btn" title="Minimize">_</button>
+          <button class="title-btn close-btn" title="Close">✕</button>
+        </div>
+      </div>
+
+      <div class="window-body lb-body">
+        <div class="lb-toolbar">
+          <button class="win98-btn small-btn" onclick="loadLeaderboard()">↻ Refresh</button>
+          <span class="toolbar-path">C:\SCORES\leaderboard.txt</span>
+        </div>
+
+        <div class="file-manager-header">
+          <span class="fmh-rank">Rank</span>
+          <span class="fmh-url">URL</span>
+          <span class="fmh-wins">Wins</span>
+        </div>
+
+        <div class="file-manager-list" id="leaderboard-list">
+          <div class="lb-empty">Loading scores...</div>
+        </div>
+
+        <div class="status-bar">
+          <span id="leaderboard-status" class="status-main">0 entries</span>
+        </div>
+      </div>
+    </div><!-- /leaderboard-window -->
+
+
+    <!-- ═══════════════ MODAL: BATTLE RULE ═══════════════ -->
+    <div class="modal-overlay" id="rule-modal">
+      <div class="win98-window modal-window" id="rule-window">
+        <div class="title-bar">
+          <span class="title-icon">⚠</span>
+          <span class="title-bar-text">SYSTEM ALERT — Battle Rule Assigned</span>
+          <div class="title-bar-controls">
+            <button class="title-btn close-btn" onclick="closeRuleModal()">✕</button>
+          </div>
+        </div>
+        <div class="window-body modal-body">
+          <div class="rule-card">
+            <div class="rule-emoji" id="rule-emoji">📚</div>
+            <div class="rule-name" id="rule-name">THE LIBRARY CRAWL</div>
+            <div class="rule-desc" id="rule-desc">The website with the most raw text characters wins.</div>
+            <div class="rule-metric" id="rule-metric">Measuring: textContent character count</div>
+          </div>
+          <div class="modal-buttons">
+            <button class="win98-btn modal-ok-btn" id="rule-ok-btn" onclick="startBattleExecution()">OK — BEGIN BATTLE</button>
+            <button class="win98-btn" onclick="closeRuleModal()">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ═══════════════ MODAL: PROGRESS ═══════════════ -->
+    <div class="modal-overlay" id="progress-modal">
+      <div class="win98-window modal-window" id="progress-window">
+        <div class="title-bar">
+          <span class="title-icon">⚙</span>
+          <span class="title-bar-text">BATTLE.EXE — Executing...</span>
+        </div>
+        <div class="window-body modal-body">
+          <div class="progress-content">
+            <div class="progress-label" id="progress-label">Initializing battle systems...</div>
+            <div class="win98-progress-bar">
+              <div class="progress-track" id="progress-track"></div>
+            </div>
+            <div class="progress-footer">
+              <span class="progress-pct" id="progress-pct">0%</span>
+              <span class="progress-detail" id="progress-detail">Please wait...</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ═══════════════ MODAL: RESULTS ═══════════════ -->
+    <div class="modal-overlay" id="results-modal">
+      <div class="win98-window modal-window results-window" id="results-window">
+        <div class="title-bar">
+          <span class="title-icon">🏆</span>
+          <span class="title-bar-text">BATTLE RESULTS — Round Complete</span>
+          <div class="title-bar-controls">
+            <button class="title-btn close-btn" onclick="closeResultsModal()">✕</button>
+          </div>
+        </div>
+        <div class="window-body modal-body">
+          <div class="winner-banner" id="winner-banner">🏆 WINNER!</div>
+          <div class="winner-url-box" id="winner-url">https://example.com</div>
+          <pre class="battle-stats-log" id="battle-stats"></pre>
+          <div class="simulated-notice" id="simulated-notice">
+            ⚠ One or more sites used Simulated Site Telemetry (proxy was blocked).
+          </div>
+          <div class="modal-buttons">
+            <button class="win98-btn modal-ok-btn" onclick="closeResultsModal()">Next Round ▶</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ═══════════════ TASKBAR ═══════════════ -->
+    <div id="taskbar">
+      <button class="start-btn" id="start-button">
+        <span class="win-logo">⊞</span> Start
+      </button>
+      <div class="taskbar-divider"></div>
+      <div class="taskbar-windows">
+        <button class="taskbar-item active-item">⚔ URL SHOWDOWN</button>
+        <button class="taskbar-item">🏆 LEADERBOARD</button>
+      </div>
+      <div class="taskbar-tray">
+        <span class="tray-icon">🔊</span>
+        <span id="taskbar-clock">00:00</span>
+      </div>
+    </div>
+
+  </div><!-- /desktop -->
+
+  <script src="script.js"></script>
+</body>
+</html>
