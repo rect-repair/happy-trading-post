@@ -69,6 +69,20 @@ body {
 }
 .sh .star { color: #fff; text-shadow: none; -webkit-text-stroke: 0; }
 
+.ver-bar {
+  margin: 3px 3px 0;
+  padding: 2px 6px;
+  border-top: 1px solid #1a5c0a;
+  border-bottom: 1px solid #1a5c0a;
+  background: #e8f4e0;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  color: #1a5c0a;
+  text-align: center;
+  line-height: 1.3;
+}
+
 /* ══ MARKET BOX ══ */
 .market-wrap { margin: 3px 3px 0; border: 1px solid #c00; background: #fffef0; }
 .market-announce {
@@ -131,20 +145,38 @@ body {
   background: #fff;
   padding: 8px 10px;
 }
-.brief-wrap p {
-  font-size: 11px;
-  line-height: 1.75;
-  color: #333;
-  margin: 0 0 10px;
-  text-align: justify;
-}
-.brief-wrap p:last-child { margin-bottom: 0; }
 .brief-lead {
   font-size: 13px;
   font-weight: 700;
   color: #cc0000;
+  margin: 0 0 8px;
 }
-
+.brief-wrap .rlist { margin: 0; }
+.brief-wrap .rule-text {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  flex: 1;
+  min-width: 0;
+}
+.brief-wrap .rule-en {
+  font-size: 10px;
+  line-height: 1.45;
+  color: #333;
+}
+.brief-wrap .rule-zh {
+  font-size: 10px;
+  line-height: 1.55;
+  color: #196600;
+  text-align: justify;
+}
+.groupchat-pic {
+  display: block;
+  width: 100%;
+  max-width: 280px;
+  margin: 12px auto 0;
+  border: 1px solid #ddd;
+}
 /* ══ TWO COLUMN BODY ══ */
 .two-col {
   display: flex;
